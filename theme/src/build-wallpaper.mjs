@@ -258,17 +258,41 @@ write( 'fsn-landscape', svg( scene ) );
 // The empty plain.
 write( 'fsn-night', svg( ground() ) );
 
-// The theme card in Preferences > Themes: the landscape, a dock of
-// keys down the left, and one 4Dwm window with the focused rose bar.
+// The IRIX weave: the desk's own pattern, a basket weave of 2px threads
+// in muted indigo-greys, as 4Dwm root windows were tiled. One 16px
+// tile, repeated by the shell.
+const WEAVE = { dark: '#3a4263', light: '#465074', edge: '#323958' };
+function weaveTile() {
+	const rects = [];
+	// Four 8px cells: threads run across in two, down in the other two.
+	for ( const [ cx, cy, across ] of [ [ 0, 0, true ], [ 8, 0, false ], [ 0, 8, false ], [ 8, 8, true ] ] ) {
+		for ( let i = 0; i < 4; i++ ) {
+			const fill = i % 2 ? WEAVE.light : WEAVE.dark;
+			rects.push( across ? `<rect x="${ cx }" y="${ cy + i * 2 }" width="8" height="2" fill="${ fill }"/>` : `<rect x="${ cx + i * 2 }" y="${ cy }" width="2" height="8" fill="${ fill }"/>` );
+		}
+		// A shadow where each cell tucks under its neighbour.
+		rects.push( across ? `<rect x="${ cx + 7 }" y="${ cy }" width="1" height="8" fill="${ WEAVE.edge }"/>` : `<rect x="${ cx }" y="${ cy + 7 }" width="8" height="1" fill="${ WEAVE.edge }"/>` );
+	}
+	return rects.join( '' );
+}
+const weave = weaveTile();
+writeFileSync( join( ROOT, 'wallpapers', 'irix-weave.svg' ), `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" shape-rendering="crispEdges">${ weave }</svg>\n` );
+console.log( 'wrote wallpapers/irix-weave.svg' );
+
+// The theme card in Preferences > Themes: the woven desk, a dock of
+// keys down the left, and the fsn window flying over the landscape.
 const card = `<svg xmlns="http://www.w3.org/2000/svg" width="320" height="200" viewBox="0 0 320 200" role="img" aria-label="FSN">
-<svg width="320" height="200" viewBox="192 40 1536 960" font-family="Helvetica, Arial, sans-serif">${ DEFS }${ scene }</svg>
+<defs><pattern id="weave" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="scale(0.5)">${ weave }</pattern></defs>
+<rect width="320" height="200" fill="url(#weave)"/>
 <rect x="0" y="0" width="22" height="200" fill="#b4b4c4"/>
 ${ [ '#2f6be8', '#f08a00', '#5fb81c', '#e8c000', '#1fb5ad', '#a845e0', '#e8352b' ].map( ( c, i ) => `<rect x="3" y="${ 6 + i * 20 }" width="16" height="16" fill="#b4b4c4" stroke="#f2f2f8" stroke-width="1"/><rect x="7" y="${ 9 + i * 20 }" width="8" height="10" fill="${ c }"/>` ).join( '' ) }
-<rect x="150" y="96" width="150" height="92" fill="#b4b4c4" stroke="#3e3e50"/>
-<rect x="152" y="98" width="146" height="12" fill="#a35a6e"/>
-<text x="225" y="107.5" font-family="Helvetica, Arial, sans-serif" font-size="8" fill="#ffffff" text-anchor="middle">fsn</text>
-<rect x="155" y="114" width="140" height="70" fill="#f2f2f8" stroke="#7a7a90"/>
-<path d="M162 124h80M162 134h110M162 144h96M162 154h60" stroke="#7a7a90" stroke-width="3"/>
+<rect x="40" y="14" width="268" height="176" fill="#b4b4c4" stroke="#3e3e50"/>
+<rect x="42" y="16" width="264" height="12" fill="#a35a6e"/>
+<text x="174" y="25.5" font-family="Helvetica, Arial, sans-serif" font-size="8" fill="#ffffff" text-anchor="middle">fsn</text>
+<svg x="43" y="29" width="262" height="138" viewBox="240 20 1440 760" preserveAspectRatio="xMidYMid slice" font-family="Helvetica, Arial, sans-serif">${ DEFS }${ scene }</svg>
+<rect x="46" y="171" width="190" height="6" fill="#f2f2f8" stroke="#7a7a90" stroke-width="0.5"/>
+<rect x="46" y="180" width="190" height="6" fill="#f2f2f8" stroke="#7a7a90" stroke-width="0.5"/>
+${ [ 0, 1, 2 ].map( ( i ) => `<rect x="${ 244 + i * 21 }" y="173" width="18" height="10" fill="#b4b4c4" stroke="#3e3e50" stroke-width="0.5"/>` ).join( '' ) }
 </svg>
 `;
 writeFileSync( join( ROOT, 'preview.svg' ), card );

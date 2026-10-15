@@ -10,7 +10,7 @@ const WHITE = '#f2f2f8';
 const SHADOW = '#7a7a90';
 const DARK = '#3e3e50';
 const ROSE = '#a35a6e';
-const DESK = '#0c1630';
+const DESK = '#3a4263';
 const SANS = 'Helvetica, "Helvetica Neue", Arial, sans-serif';
 const MONO = '"Courier New", Courier, monospace';
 // Motif bevels, as inset shadows: two pixels lit top-left, two shaded
@@ -425,6 +425,7 @@ export default {
 		DOCK_ITEM_FOCUSED: { type: 'image', path: 'chrome/key-pressed.svg' },
 	},
 	wallpapers: {
+		weave: { path: 'wallpapers/irix-weave.svg', label: 'IRIX Weave', description: 'The woven indigo-grey pattern IRIX tiled across the root window.', size: 'auto', repeat: 'repeat', position: 'left top' },
 		landscape: { path: 'wallpapers/fsn-landscape.svg', label: 'Information Landscape', description: 'The File System Navigator flying over a WordPress install: directories on pedestals, files as blocks coloured by age.', size: 'cover', position: 'center bottom' },
 		night: { path: 'wallpapers/fsn-night.svg', label: 'Night Grid', description: 'The empty fsn ground plane, before the directories load.', size: 'cover', position: 'center bottom' },
 	},
@@ -436,7 +437,7 @@ export default {
 		adminBarMode: 'hidden',
 		windowReveal: 'iris',
 		windowRevealDuration: 360,
-		wallpaper: 'landscape',
+		wallpaper: 'weave',
 		dockRailRenderer: 'default',
 		accentColor: ROSE,
 		// No Mio and no widgets: IRIX had neither on the desk.
