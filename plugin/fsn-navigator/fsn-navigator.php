@@ -23,6 +23,7 @@ const FSN_NAVIGATOR_WINDOW  = 'fsn-navigator';
 const FSN_NAVIGATOR_MAX_PER_PEDESTAL = 120;
 
 add_action( 'init', 'fsn_navigator_register', 20 );
+add_action( 'admin_enqueue_scripts', 'fsn_navigator_enqueue_access' );
 add_action( 'rest_api_init', 'fsn_navigator_register_routes' );
 
 /**
@@ -81,6 +82,25 @@ function fsn_navigator_register() {
 			)
 		);
 	}
+}
+
+/**
+ * The /access command for the command palette. It must be on the page
+ * before the palette opens, so it loads with the shell rather than with
+ * the fsn window; the lockout window it opens uses the same stylesheet.
+ */
+function fsn_navigator_enqueue_access() {
+	if ( ! function_exists( 'openstation_is_enabled' ) || ! openstation_is_enabled() ) {
+		return;
+	}
+	wp_enqueue_script(
+		'fsn-navigator-access',
+		plugins_url( 'assets/access.js', __FILE__ ),
+		array( 'openstation' ),
+		FSN_NAVIGATOR_VERSION,
+		true
+	);
+	wp_enqueue_style( 'fsn-navigator' );
 }
 
 /**

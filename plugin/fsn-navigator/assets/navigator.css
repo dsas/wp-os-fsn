@@ -158,3 +158,40 @@
 .fsn__ramp-ends {
 	opacity: 0.75;
 }
+
+/*
+ * The /access lockout: a black terminal filling with the line, and the
+ * wagging finger inset in the corner.
+ */
+.fsn-access {
+	position: relative;
+	height: 100%;
+	background: #000000;
+	outline: none;
+}
+
+.fsn-access__screen {
+	height: 100%;
+	margin: 0;
+	padding: 12px 14px;
+	box-sizing: border-box;
+	overflow: hidden;
+	color: #e8e8e8;
+	font: 15px/1.35 "Courier New", Courier, monospace;
+	white-space: pre-wrap;
+}
+
+.fsn-access__finger {
+	position: absolute;
+	top: 12px;
+	right: 12px;
+	width: 96px;
+	height: 96px;
+	image-rendering: pixelated;
+	background: #2a3a5a;
+	box-shadow: 0 0 0 2px #b4b4c4, 0 0 0 3px #3e3e50;
+}
+
+.fsn-access__finger[hidden] {
+	display: none;
+}
