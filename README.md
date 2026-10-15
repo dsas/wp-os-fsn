@@ -4,6 +4,12 @@ The IRIX desktop from the Jurassic Park control room, for [WordPress OpenStation
 
 **Try it live: https://wp-os-fsn.space.fast**. WordPress runs in your browser, with nothing to install.
 
+
+
+https://github.com/user-attachments/assets/06e85b31-b387-4f8f-b325-a0fa77e66942
+
+
+
 - **`theme/`**: the FSN desktop theme. Lilac-grey Motif bevels, a rose title bar, fsn-style pedestal icons and the 3D File System Navigator landscape as the wallpaper.
 - **`plugin/fsn-navigator/`**: the FSN Navigator plugin. It adds an **fsn** window that draws your site as an information landscape you can fly over: categories, pages and media are pedestals, and every post, page or file is a block whose height is its size and whose colour is its age. Works with any OpenStation theme.
 - **`demo/`**: the Playground demo hosted on Spacefast.
