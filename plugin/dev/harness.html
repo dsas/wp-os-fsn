@@ -1,0 +1,49 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>fsn harness</title>
+<link rel="stylesheet" href="../fsn-navigator/assets/navigator.css">
+<style>html,body{margin:0;height:100%;background:#333} #win{position:absolute;inset:20px;}</style>
+<div id="win"><div class="fsn">
+		<div class="fsn__view" tabindex="0" aria-label="Content landscape. Click a pedestal to fly to it, click a block to select it, double-click to open it. Drag to look around, scroll to move.">
+			
+			<div class="fsn__loading">Reading the information landscape…</div>
+		</div>
+		<div class="fsn__panel">
+			<div class="fsn__path">
+				<span class="fsn__label">Directory:</span>
+				<span class="fsn__directory">/</span>
+			</div>
+			<div class="fsn__file">
+				<span class="fsn__label">File:</span>
+				<span class="fsn__selection">None selected</span>
+			</div>
+			<div class="fsn__buttons">
+				<button type="button" class="fsn__button" data-fsn="home">Home</button>
+				<button type="button" class="fsn__button" data-fsn="up">Up</button>
+				<button type="button" class="fsn__button" data-fsn="overview">Overview</button>
+				<button type="button" class="fsn__button" data-fsn="open" disabled>Open</button>
+				<button type="button" class="fsn__button" data-fsn="view" disabled>View</button>
+			</div>
+		</div>
+	</div></div>
+<script>
+// A stand-in for the OpenStation shell and the REST endpoint, for
+// working on the view outside WordPress.
+const now = Math.floor( Date.now() / 1000 );
+let seed = 7;
+const rnd = () => ( seed = ( seed * 16807 ) % 2147483647 ) / 2147483647;
+const files = ( n, unit ) => Array.from( { length: n }, ( _, i ) => ( {
+	id: Math.floor( rnd() * 1e6 ), title: 'Item ' + i, type: unit === 'bytes' ? 'attachment' : 'post',
+	status: rnd() < 0.1 ? 'draft' : 'publish', size: Math.floor( Math.pow( 10, 1 + rnd() * ( unit === 'bytes' ? 5 : 3.3 ) ) ), unit,
+	modified: now - Math.floor( Math.pow( rnd(), 2 ) * 1500 * 86400 ), edit: '#edit', view: '#view',
+} ) );
+const data = { site: 'Harness', now, root: { name: '/', files: [], children: [
+	{ name: 'Posts', files: [], children: [ 'Park Operations', 'Genetics', 'Control Room', 'Visitor Center', 'Field Notes', 'Drafts' ].map( ( n ) => ( { name: n, files: files( 3 + Math.floor( rnd() * 9 ), 'words' ) } ) ) },
+	{ name: 'Pages', files: files( 6, 'words' ) },
+	{ name: 'Media', files: [], children: [ { name: 'Images', files: files( 9, 'bytes' ) } ] },
+] } };
+window.fetch = async () => ( { ok: true, json: async () => data } );
+window.wp = { os: { getWindowConfig: () => ( { restUrl: '/x', nonce: 'n', threeUrl: new URL( '../fsn-navigator/assets/vendor/three.module.min.js', location.href ).href } ), windowManager: { open: ( c ) => console.log( 'open', c ) } } };
+</script>
+<script src="../fsn-navigator/assets/navigator.js"></script>
+<script>window.openStationNativeWindows['fsn-navigator']( document.getElementById( 'win' ) );</script>

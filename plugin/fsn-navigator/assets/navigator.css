@@ -1,0 +1,160 @@
+/*
+ * FSN Navigator: the 3D view on top, fsn's control panel underneath.
+ * The panel reads the shell's UI tokens, so it follows whichever
+ * desktop theme is active, and falls back to IRIX greys.
+ */
+.fsn {
+	display: flex;
+	flex-direction: column;
+	height: 100%;
+	min-height: 0;
+	background: #02040c;
+	font-family: var( --os-ui-font, Helvetica, Arial, sans-serif );
+}
+
+.fsn__view {
+	position: relative;
+	flex: 1;
+	min-height: 0;
+	overflow: hidden;
+	outline: none;
+}
+
+.fsn__view:focus-visible {
+	box-shadow: inset 0 0 0 2px var( --os-accent, #a35a6e );
+}
+
+.fsn__loading[hidden] {
+	display: none;
+}
+
+.fsn__canvas {
+	display: block;
+	width: 100%;
+	height: 100%;
+	touch-action: none;
+}
+
+.fsn__loading {
+	position: absolute;
+	inset: 0;
+	display: grid;
+	place-items: center;
+	padding: 24px;
+	color: #c8d8f0;
+	font-size: 13px;
+	text-align: center;
+}
+
+.fsn__loading.is-error {
+	color: #ffb4a8;
+}
+
+.fsn__tip {
+	position: absolute;
+	max-width: 280px;
+	padding: 2px 6px;
+	background: #ffffe1;
+	color: #000000;
+	font-size: 12px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	pointer-events: none;
+	box-shadow: 0 0 0 1px #3e3e50;
+}
+
+.fsn__tip[hidden] {
+	display: none;
+}
+
+.fsn__panel {
+	display: grid;
+	grid-template-columns: minmax( 220px, 1fr ) auto;
+	gap: 6px 12px;
+	padding: 8px 10px;
+	background: var( --os-ui-surface, #b4b4c4 );
+	color: var( --os-ui-fg, #000000 );
+	font-size: 12px;
+	box-shadow: inset 0 1px #f2f2f8, inset 0 2px #d6d6e2;
+}
+
+.fsn__path,
+.fsn__file {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	min-width: 0;
+	grid-column: 1;
+}
+
+.fsn__label {
+	flex: none;
+	width: 64px;
+	text-align: right;
+}
+
+.fsn__directory,
+.fsn__selection {
+	flex: 1;
+	min-width: 0;
+	padding: 2px 6px;
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+	background: var( --os-ui-field-bg, #f2f2f8 );
+	box-shadow: var( --os-ui-text-field-shadow, inset 1px 1px #7a7a90, inset -1px -1px #f2f2f8 );
+	font-family: var( --os-ui-font-mono, "Courier New", Courier, monospace );
+}
+
+.fsn__buttons {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 4px;
+	justify-content: flex-end;
+	align-items: center;
+	grid-column: 2;
+	grid-row: 1 / span 2;
+}
+
+.fsn__button {
+	min-height: 23px;
+	padding: 2px 9px;
+	border: 0;
+	border-radius: var( --os-ui-button-border-radius, 0 );
+	background: var( --os-ui-button-bg, #b4b4c4 );
+	color: var( --os-ui-button-fg, #000000 );
+	box-shadow: var( --os-ui-button-shadow, inset -1px -1px #3e3e50, inset 1px 1px #f2f2f8, inset -2px -2px #7a7a90, inset 2px 2px #d6d6e2 );
+	font: inherit;
+	cursor: pointer;
+}
+
+.fsn__button:active:not( :disabled ) {
+	box-shadow: var( --os-ui-button-shadow-active, inset -1px -1px #f2f2f8, inset 1px 1px #3e3e50, inset -2px -2px #d6d6e2, inset 2px 2px #7a7a90 );
+}
+
+.fsn__button:disabled {
+	opacity: 0.5;
+	cursor: default;
+}
+
+.fsn__legend {
+	display: flex;
+	align-items: center;
+	gap: 6px;
+	grid-column: 1 / -1;
+}
+
+.fsn__ramp {
+	display: flex;
+	box-shadow: 0 0 0 1px #3e3e50;
+}
+
+.fsn__ramp i {
+	width: 18px;
+	height: 10px;
+}
+
+.fsn__ramp-ends {
+	opacity: 0.75;
+}

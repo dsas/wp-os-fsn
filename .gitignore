@@ -1,0 +1,12 @@
+.DS_Store
+/dist/
+
+# Built by bin/build.sh from theme/src/.
+/theme/theme.json
+/theme/preview.svg
+/theme/chrome/
+/theme/icons/
+/theme/wallpapers/
+
+# Local preview servers for the Claude desktop app.
+/.claude/

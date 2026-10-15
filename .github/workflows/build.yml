@@ -1,0 +1,40 @@
+# Builds the theme and plugin ZIPs on every push and pull request, and
+# keeps them as a downloadable artifact of the run. Pushing a tag like
+# v1.0.0 also publishes a GitHub release with both ZIPs attached, so
+# the latest ones are always at
+# https://github.com/<owner>/<repo>/releases/latest/download/fsn-theme.zip
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+    tags: [ 'v*' ]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Build the ZIPs
+        run: bin/build.sh
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fsn-zips
+          path: dist/*.zip
+
+      - name: Publish a release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release create "$GITHUB_REF_NAME" dist/*.zip --title "$GITHUB_REF_NAME" --generate-notes

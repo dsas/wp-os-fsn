@@ -1,0 +1,13 @@
+.spacefast/state.json
+/.spacefast-*
+.spacefast/.spacefast-*
+.spacefast/.space-link-*.tmp
+
+# Assembled by bin/demo.sh.
+/theme.zip
+/fsn-navigator.zip
+/openstation.zip
+/.openstation-version
+/preview.png
+/wallpaper.svg
+/favicon.svg
