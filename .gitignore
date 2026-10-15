@@ -10,3 +10,8 @@
 
 # Local preview servers for the Claude desktop app.
 /.claude/
+/.cache/
+
+# Screen recordings: kept out of git, the README video is hosted by GitHub.
+/media/*.mp4
+/media/*.gif

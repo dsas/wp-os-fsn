@@ -21,6 +21,15 @@ if ( is_wp_error( $theme ) ) {
 // OpenStation on, every first-run intro already seen, and the
 // Dashboard showing its boxes rather than the welcome panel.
 update_user_meta( $user->ID, 'show_welcome_panel', 0 );
+// Nor the block editor's welcome guide, the first time a post opens.
+update_user_meta(
+	$user->ID,
+	$GLOBALS['wpdb']->get_blog_prefix() . 'persisted_preferences',
+	array(
+		'core/edit-post' => array( 'welcomeGuide' => false ),
+		'_modified'      => gmdate( 'c' ),
+	)
+);
 update_user_meta( $user->ID, 'desktop_mode_mode', '1' );
 update_user_meta(
 	$user->ID,

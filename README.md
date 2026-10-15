@@ -28,8 +28,9 @@ Both need an OpenStation version newer than 1.1.12.
 With Node 20 or newer:
 
 ```bash
-bin/build.sh   # theme assets from theme/src/, then dist/fsn-theme.zip and dist/fsn-navigator.zip
-bin/demo.sh    # also assembles demo/; then publish with: sf publish demo
+bin/build.sh          # theme assets from theme/src/, then dist/fsn-theme.zip and dist/fsn-navigator.zip
+bin/demo.sh           # also assembles the demo site in dist/demo/
+bin/publish-demo.sh   # builds the demo and publishes it to Spacefast
 ```
 
 `plugin/dev/harness.html` runs the fsn view on fake data, outside WordPress: serve `plugin/` over HTTP and open it.

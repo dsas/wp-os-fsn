@@ -98,7 +98,7 @@
 		renderer.setPixelRatio( Math.min( window.devicePixelRatio || 1, 2 ) );
 		renderer.setClearColor( SKY );
 		const scene = new THREE.Scene();
-		scene.fog = new THREE.Fog( HAZE, 40, 170 );
+		scene.fog = new THREE.Fog( HAZE, 60, 260 );
 		const camera = new THREE.PerspectiveCamera( 50, 1, 0.1, 600 );
 
 		scene.add( new THREE.HemisphereLight( 0xb8ccff, 0x1a2244, 1.4 ) );
@@ -187,7 +187,7 @@
 		const fadeMap = new THREE.CanvasTexture( fade );
 		textures.push( fadeMap );
 		const beam = new THREE.Mesh(
-			new THREE.CylinderGeometry( 0.2, 0.9, 1, 32, 1, true ),
+			new THREE.CylinderGeometry( 0.15, 0.55, 1, 32, 1, true ),
 			new THREE.MeshBasicMaterial( { color: 0xeaf2ff, alphaMap: fadeMap, transparent: true, opacity: 0.35, depthWrite: false, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, fog: false } )
 		);
 		beam.geometry.translate( 0, 0.5, 0 );
@@ -202,7 +202,7 @@
 
 		function applyOrbit() {
 			orbit.pitch = Math.min( 1.45, Math.max( 0.05, orbit.pitch ) );
-			orbit.radius = Math.min( 220, Math.max( 3, orbit.radius ) );
+			orbit.radius = Math.min( 160, Math.max( 3, orbit.radius ) );
 			const r = orbit.radius;
 			camera.position.set(
 				target.x + r * Math.cos( orbit.pitch ) * Math.sin( orbit.yaw ),
@@ -268,7 +268,7 @@
 				return;
 			}
 			const size = Math.max( node.w, node.d, node.tallest );
-			flyTo( new THREE.Vector3( node.x, node.h + node.tallest * 0.35, node.z ), { radius: 7 + size * 1.5, yaw: 0, pitch: 0.55 }, ms );
+			flyTo( new THREE.Vector3( node.x, node.h + node.tallest * 0.35, node.z ), { radius: 9 + size * 1.9, yaw: 0, pitch: 0.55 }, ms );
 		}
 
 		function select( file ) {
@@ -299,7 +299,7 @@
 				minZ = Math.min( minZ, n.z - n.d / 2 );
 			}
 			const span = Math.max( maxX - minX, root.z - minZ );
-			flyTo( new THREE.Vector3( ( minX + maxX ) / 2, 0, ( root.z + minZ ) / 2 ), { radius: span * 1.05 + 10, yaw: 0, pitch: 1.0 }, 1100 );
+			flyTo( new THREE.Vector3( ( minX + maxX ) / 2, 0, ( root.z + minZ ) / 2 ), { radius: span * 0.62 + 10, yaw: 0, pitch: 0.95 }, 1100 );
 		}
 
 		function open( file, view ) {
@@ -420,7 +420,7 @@
 			( e ) => {
 				e.preventDefault();
 				flight = null;
-				orbit.radius *= Math.exp( e.deltaY * 0.0015 );
+				orbit.radius *= Math.exp( Math.max( -100, Math.min( 100, e.deltaY ) ) * 0.0012 );
 				applyOrbit();
 			},
 			{ passive: false }

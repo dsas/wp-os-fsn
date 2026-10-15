@@ -31,7 +31,7 @@ html.phone-mode, html.phone-mode body { height: auto; overflow: auto; }
 html.phone-mode #wp, html.phone-mode .splash:not( .phone ) { display: none; }
 html.phone-mode .phone { display: grid; position: static; min-height: 100vh; padding: 16px; box-sizing: border-box; }
 .phone .box { width: auto; max-width: 420px; }
-.phone img { display: block; width: 100%; height: auto; margin: 10px 0; border: 1px solid #3e3e50; box-sizing: border-box; }
+.phone video { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; margin: 10px 0; border: 1px solid #3e3e50; box-sizing: border-box; background: #000; }
 </style>
 <script>
 // Phones get a picture instead: the desktop does not fit, and WordPress is a big download.
@@ -48,8 +48,8 @@ if ( matchMedia( '(hover: none) and (pointer: coarse), (max-width: 700px)' ).mat
 		<div class="title">fsn</div>
 		<div class="body">
 			<p>This demo needs a bigger screen.</p>
-			<p>It's real WordPress, running entirely in your browser. Open this page on a computer to try it. Until then, here's a look.</p>
-			<img src="preview.png" alt="The FSN theme: a rose-titled window over a 3D landscape of directory pedestals and coloured file blocks">
+			<p>It's real WordPress, running entirely in your browser. Open this page on a computer to try it. Until then, here's a quick look.</p>
+			<video data-src="demo.mp4" data-poster="demo.jpg" muted loop playsinline autoplay aria-label="A screen recording of the demo: flying over the site's content in the fsn window"></video>
 			<p class="links"><a href="https://openstation.me" target="_blank" rel="noopener">WordPress OpenStation</a><a href="theme.zip">Download FSN</a></p>
 			<p class="links"><span></span><a href="fsn-navigator.zip">Download FSN Navigator</a></p>
 			<p><a href="#" class="try">Try it anyway</a></p>
@@ -129,8 +129,13 @@ async function start() {
 }
 
 if ( document.documentElement.classList.contains( 'phone-mode' ) ) {
+	const video = document.querySelector( '.phone video' );
+	video.poster = video.dataset.poster;
+	video.src = video.dataset.src;
+	video.play().catch( () => {} );
 	document.querySelector( '.try' ).addEventListener( 'click', ( event ) => {
 		event.preventDefault();
+		video.pause();
 		document.documentElement.classList.remove( 'phone-mode' );
 		start();
 	} );
